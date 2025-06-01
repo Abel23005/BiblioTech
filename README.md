@@ -153,8 +153,11 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.m
 
 ## 👥 Equipo
 
-- **Desarrollador Principal:** [Tu Nombre](https://github.com/tuusuario)
-- **Diseñador UI/UX:** [Nombre del Diseñador](https://github.com/disenador)
+- **Desarrollador Principal:** [Abel23005](https://github.com/Abel23005)
+- **Diseñadores UI/UX:** 
+  - [sebastianalva24AC](https://github.com/sebastianalva24AC)
+  - [Abel23005](https://github.com/Abel23005)
+  - [Daniellaln](https://github.com/Daniellaln)
 
 ## 🤝 Contribuir
 
@@ -162,10 +165,16 @@ Las contribuciones son bienvenidas. Por favor, lee [CONTRIBUTING.md](CONTRIBUTIN
 
 ## 📞 Soporte
 
-Si tienes alguna pregunta o problema, por favor abre un issue en el repositorio o contacta al equipo de desarrollo en [email@example.com](mailto:email@example.com).
+Si tienes alguna pregunta o problema, por favor contacta al equipo de desarrollo:
 
-## 🙏 Agradecimientos
+- **Desarrollador Principal:** Abel23005
+- **Correo de Contacto:** [imer.qusipe@tecsup.edu.pe](mailto:imer.qusipe@tecsup.edu.pe)
 
+También puedes abrir un issue en el repositorio para reportar problemas o sugerir mejoras.
+
+## 🎉 Agradecimientos
+
+- Al profesor Gonzalo Chrisjacq Suarez Garcia por su excelente guía y enseñanza
 - A todos los contribuidores que participan en este proyecto
 - A la comunidad de Laravel por su excelente documentación
 - A los usuarios por sus valiosos comentarios y sugerencias
