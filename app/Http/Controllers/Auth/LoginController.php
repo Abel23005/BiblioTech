@@ -3,38 +3,45 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    public function showLoginForm()
+    use AuthenticatesUsers;
+
+    protected $redirectTo = '/dashboard';
+
+    public function __construct()
     {
-        return view('auth.login');
+        $this->middleware('guest')->except('logout');
+        $this->middleware('auth')->only('logout');
     }
 
-    public function login(Request $request)
+    /**
+     * Sobrescribimos el método attemptLogin para validar la contraseña sin hash.
+     */
+    protected function attemptLogin(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $user = Usuario::where('email', $request->email)->first();
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect('/dashboard');
+        if (!$user) {
+            return false;
         }
 
-        return back()->withErrors([
-            'email' => 'Credenciales incorrectas.',
-        ]);
-    }
+        // Comparación con contraseña en texto plano
+        if ($request->password === $user->password) {
+            // (Opcional) Convertimos la contraseña a Bcrypt para el futuro
+            $user->password = Hash::make($request->password);
+            $user->save();
 
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
+            Auth::login($user);
+            return true;
+        }
+
+        return false;
     }
 }

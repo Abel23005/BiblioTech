@@ -9,19 +9,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('libros', function (Blueprint $table) {
-            $table->id(); // Primary Key (PK)
+            $table->id();
             $table->string('titulo');
-            $table->unsignedBigInteger('autor_id'); // Foreign Key (FK)
-            $table->string('editorial')->nullable();
-            $table->year('anio_publicacion')->nullable();
-            $table->string('isbn')->unique()->nullable();
-            $table->unsignedBigInteger('categoria_id'); // Foreign Key (FK)
+            $table->string('autor');
+            $table->string('isbn')->unique();
+            $table->string('categoria');
+            $table->text('descripcion')->nullable();
+            $table->string('ubicacion')->nullable();
+            $table->enum('estado', ['nuevo', 'bueno', 'regular', 'deteriorado'])->default('nuevo');
             $table->boolean('disponible')->default(true);
             $table->timestamps();
-            
-            // Relaciones
-            $table->foreign('autor_id')->references('id')->on('autores');
-            $table->foreign('categoria_id')->references('id')->on('categorias');
         });
     }
 

@@ -7,15 +7,32 @@ use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\AutorController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsuarioController;
+/*use App\Http\Controllers\MensajeController; */
+/*use App\Http\Controllers\ProveedorController; */ 
+use App\Http\Controllers\EstudianteController;
+/*use App\Http\Controllers\BibliotecarioController;*/
+/*use App\Http\Controllers\VisitaController;*/
+use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\BackupController;
+
+// Ruta principal redirige al dashboard si está autenticado, si no al login
+Auth::routes();
 
 Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
     return view('welcome');
 });
 
-Route::get('/test', function () {
-    return view('test');
-});
+// Rutas para préstamos
+Route::resource('prestamos', PrestamoController::class);
 
+// Rutas para libros
 Route::get('/libros', function () {
     return view('seccion', [
         'titulo' => 'Gestión de Libros',
@@ -23,6 +40,7 @@ Route::get('/libros', function () {
     ]);
 });
 
+// Rutas para categorías
 Route::get('/categorias', function () {
     return view('seccion', [
         'titulo' => 'Gestión de Categorías',
@@ -30,6 +48,7 @@ Route::get('/categorias', function () {
     ]);
 });
 
+// Rutas para autores
 Route::get('/autores', function () {
     return view('seccion', [
         'titulo' => 'Gestión de Autores',
@@ -37,13 +56,7 @@ Route::get('/autores', function () {
     ]);
 });
 
-Route::get('/prestamos', function () {
-    return view('seccion', [
-        'titulo' => 'Gestión de Préstamos',
-        'descripcion' => 'Permite registrar y controlar los préstamos de libros a los usuarios.'
-    ]);
-});
-
+// Rutas para reservas
 Route::get('/reservas', function () {
     return view('seccion', [
         'titulo' => 'Gestión de Reservas',
@@ -51,6 +64,7 @@ Route::get('/reservas', function () {
     ]);
 });
 
+// Rutas del panel de control
 Route::get('/dashboard', function () {
     return view('seccion', [
         'titulo' => 'Panel de Control',
@@ -58,6 +72,8 @@ Route::get('/dashboard', function () {
     ]);
 });
 
+// Rutas de autenticación
+/* 
 Route::get('/login', function () {
     return view('seccion', [
         'titulo' => 'Iniciar Sesión',
@@ -65,9 +81,57 @@ Route::get('/login', function () {
     ]);
 });
 
+
 Route::get('/register', function () {
     return view('seccion', [
         'titulo' => 'Registro de Usuario',
         'descripcion' => 'Aquí los nuevos usuarios podrán registrarse para obtener acceso al sistema de gestión de biblioteca.'
     ]);
+});
+*/
+
+
+
+// Rutas protegidas que requieren autenticación
+Route::middleware(['auth'])->group(function () {
+    // Redirigir /home al dashboard
+    Route::get('/home', function () {
+        return redirect('/dashboard');
+    });
+
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Mensajes
+    /* Route::resource('mensajes', MensajeController::class); */
+    
+    // Libros
+    Route::resource('libros', LibroController::class);
+    
+    // Proveedores
+    /*Route::resource('proveedores', ProveedorController::class); */
+    
+    // Estudiantes
+    Route::resource('estudiantes', EstudianteController::class);
+    
+    // Bibliotecarios
+    /*Route::resource('bibliotecarios', BibliotecarioController::class);*/
+    
+    // Visitas
+    /*Route::resource('visitas', VisitaController::class);*/
+    
+    // Reportes
+    Route::get('/reportes/prestamos', [ReporteController::class, 'prestamos'])->name('reportes.prestamos');
+    Route::get('/reportes/usuarios', [ReporteController::class, 'usuarios'])->name('reportes.usuarios');
+    
+    // Configuración
+    Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.general');
+    
+    // Base de Datos y Backup
+    Route::prefix('database')->group(function () {
+        Route::get('/', [DatabaseController::class, 'index'])->name('database.index');
+        Route::post('/backup', [DatabaseController::class, 'backup'])->name('database.backup');
+        Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
+    });
+    
 });

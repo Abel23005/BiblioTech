@@ -8,16 +8,17 @@ class Libro extends Model
 {
     protected $fillable = [
         'titulo',
-        'autor_id',
-        'editorial',
-        'anio_publicacion',
+        'autor',
         'isbn',
-        'categoria_id',
-        'disponible',
+        'categoria',
+        'descripcion',
+        'ubicacion',
+        'estado',
+        'disponible'
     ];
 
     protected $casts = [
-        'disponible' => 'boolean',
+        'disponible' => 'boolean'
     ];
 
     // Relaciones
@@ -36,8 +37,8 @@ class Libro extends Model
         return $this->hasMany(Prestamo::class);
     }
 
-    public function reservas()
+    public function prestamo_actual()
     {
-        return $this->hasMany(Reserva::class);
+        return $this->prestamos()->where('estado', 'activo')->first();
     }
 }
