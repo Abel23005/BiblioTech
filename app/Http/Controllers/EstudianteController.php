@@ -104,10 +104,13 @@ class EstudianteController extends Controller
             return back()->with('error', 'No se puede eliminar un estudiante que tiene préstamos activos');
         }
 
-        $estudiante->delete();
-
-        return redirect()
-            ->route('estudiantes.index')
-            ->with('success', 'Estudiante eliminado exitosamente');
+        try {
+            $estudiante->delete();
+            return redirect()
+                ->route('estudiantes.index')
+                ->with('success', 'Estudiante eliminado exitosamente');
+        } catch (\Exception $e) {
+            return back()->with('error', 'No se pudo eliminar el estudiante. Por favor, inténtalo de nuevo.');
+        }
     }
 } 

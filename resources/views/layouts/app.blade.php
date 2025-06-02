@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
     <style>
         #sidebar {
             min-width: 250px;
@@ -108,6 +109,17 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('mensajes.index') }}" class="{{ request()->routeIs('mensajes.*') ? 'active' : '' }}">
+                        <i class="fas fa-comments"></i> Mensajes
+                        @php
+                            $mensajesPendientes = \App\Models\Mensaje::where('estado', 'pendiente')->count();
+                        @endphp
+                        @if($mensajesPendientes > 0)
+                            <span class="badge bg-danger float-end">{{ $mensajesPendientes }}</span>
+                        @endif
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('reportes.prestamos') }}" class="{{ request()->routeIs('reportes.*') ? 'active' : '' }}">
                         <i class="fas fa-chart-bar"></i> Reportes
                     </a>
@@ -153,6 +165,13 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('mensajes.index') }}">
+                                            <i class="fas fa-comments"></i> Mensajes
+                                            @if($mensajesPendientes > 0)
+                                                <span class="badge bg-danger">{{ $mensajesPendientes }}</span>
+                                            @endif
+                                        </a>
+                                        <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -191,6 +210,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @stack('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sidebarCollapse = document.getElementById('sidebarCollapse');

@@ -10,24 +10,26 @@ class Mensaje extends Model
     use HasFactory;
 
     protected $fillable = [
-        'asunto',
-        'contenido',
-        'remitente_id',
-        'destinatario_id',
-        'leido'
+        'estudiante_id',
+        'mensaje',
+        'tipo',
+        'estado',
+        'respuesta',
+        'respondido_por',
+        'leido_at'
     ];
 
     protected $casts = [
-        'leido' => 'boolean'
+        'leido_at' => 'datetime',
     ];
 
-    public function remitente()
+    public function estudiante()
     {
-        return $this->belongsTo(User::class, 'remitente_id');
+        return $this->belongsTo(Estudiante::class);
     }
 
-    public function destinatario()
+    public function respondedor()
     {
-        return $this->belongsTo(User::class, 'destinatario_id');
+        return $this->belongsTo(Usuario::class, 'respondido_por');
     }
 } 

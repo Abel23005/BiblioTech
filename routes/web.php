@@ -9,7 +9,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\AutorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsuarioController;
-/*use App\Http\Controllers\MensajeController; */
+use App\Http\Controllers\MensajeController;
 /*use App\Http\Controllers\ProveedorController; */ 
 use App\Http\Controllers\EstudianteController;
 /*use App\Http\Controllers\BibliotecarioController;*/
@@ -103,7 +103,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Mensajes
-    /* Route::resource('mensajes', MensajeController::class); */
+    Route::resource('mensajes', MensajeController::class);
+    Route::patch('/mensajes/{mensaje}/responder', [MensajeController::class, 'responder'])->name('mensajes.responder');
+    Route::patch('/mensajes/{mensaje}/cerrar', [MensajeController::class, 'cerrar'])->name('mensajes.cerrar');
     
     // Libros
     Route::resource('libros', LibroController::class);
