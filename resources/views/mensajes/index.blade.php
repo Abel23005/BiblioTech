@@ -1,68 +1,67 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-white leading-tight">
+            {{ __('app.messages') }}
+        </h2>
+    </x-slot>
 
-@section('content')
-<div class="container-fluid px-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h3 mb-0">Mensajes</h2>
-        <a href="{{ route('mensajes.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nuevo Mensaje
-        </a>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card bg-dark mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Conversaciones</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush">
-                        @forelse($mensajes as $mensaje)
-                            <a href="{{ route('mensajes.show', $mensaje) }}" 
-                               class="list-group-item list-group-item-action bg-dark text-white border-light 
-                                      {{ request()->route('mensaje') && request()->route('mensaje')->id == $mensaje->id ? 'active' : '' }}">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="mb-1">{{ $mensaje->estudiante->nombre }}</h6>
-                                        <small class="text-muted">
-                                            <span class="badge bg-{{ $mensaje->estado === 'pendiente' ? 'warning' : ($mensaje->estado === 'respondido' ? 'success' : 'secondary') }}">
-                                                {{ ucfirst($mensaje->estado) }}
-                                            </span>
-                                            {{ $mensaje->tipo }}
-                                        </small>
-                                    </div>
-                                    <small class="text-muted">{{ $mensaje->created_at->diffForHumans() }}</small>
-                                </div>
-                                <p class="mb-1 text-truncate">{{ $mensaje->mensaje }}</p>
-                                @if(!$mensaje->leido_at && auth()->user()->id === $mensaje->estudiante_id)
-                                    <span class="badge bg-primary">Nuevo</span>
-                                @endif
-                            </a>
-                        @empty
-                            <div class="list-group-item bg-dark text-white border-light">
-                                <p class="mb-0 text-center">No hay mensajes</p>
+    <div class="py-12 bg-content">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="flex flex-col md:flex-row h-[70vh] border border-gray-200 rounded-lg shadow-md">
+                        <!-- Columna de Conversaciones (Izquierda) -->
+                        <div class="w-full md:w-1/3 border-r border-gray-200 flex flex-col bg-gray-50">
+                            <div class="p-4 bg-primary-header text-white flex justify-between items-center rounded-tl-lg">
+                                <h3 class="text-lg font-semibold">{{ __('app.conversations') }}</h3>
+                                <a href="{{ route('mensajes.create') }}" class="btn-confirm px-4 py-2 rounded-md font-semibold text-xs uppercase tracking-widest">
+                                    <i class="fas fa-plus mr-2"></i> {{ __('app.new_message') }}
+                                </a>
                             </div>
-                        @endforelse
+                            <div class="flex-1 overflow-y-auto">
+                                <div class="bg-white divide-y divide-gray-200">
+                                    @forelse($mensajes as $mensaje)
+                                        <a href="{{ route('mensajes.show', $mensaje) }}" 
+                                           class="block px-4 py-3 hover:bg-gray-100 {{ request()->route('mensaje') && request()->route('mensaje')->id == $mensaje->id ? 'bg-blue-50' : '' }}">
+                                            <div class="flex justify-between items-center">
+                                                <div>
+                                                    <h4 class="text-sm font-semibold text-primary-header">{{ $mensaje->estudiante->nombre }}</h4>
+                                                    <p class="text-xs text-gray-600 truncate">{{ $mensaje->mensaje }}</p>
+                                                </div>
+                                                <span class="text-xs text-gray-500">{{ $mensaje->created_at->diffForHumans() }}</span>
+                                            </div>
+                                            @if(!$mensaje->leido_at && auth()->user()->id === $mensaje->estudiante->usuario_id)
+                                                <span class="ml-auto mt-1 px-2 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Nuevo</span>
+                                            @endif
+                                        </a>
+                                    @empty
+                                        <div class="px-4 py-3 text-center text-gray-500">
+                                            {{ __('app.no_messages') }}
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </div>
+                            <div class="p-4 border-t border-gray-200 bg-gray-100">
+                                {{ $mensajes->links() }}
+                            </div>
+                        </div>
+
+                        <!-- Columna de Chat (Derecha) -->
+                        <div class="w-full md:w-2/3 flex flex-col bg-white rounded-br-lg">
+                            @if(request()->route('mensaje'))
+                                @include('mensajes.chat')
+                            @else
+                                <div class="flex-1 flex items-center justify-center bg-gray-50 text-gray-500 rounded-br-lg">
+                                    <div class="text-center">
+                                        <i class="fas fa-comments text-4xl mb-4 text-primary-header"></i>
+                                        <h5 class="text-lg font-semibold text-primary-header">{{ __('app.select_conversation') }}</h5>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    {{ $mensajes->links() }}
                 </div>
             </div>
         </div>
-
-        <div class="col-md-8">
-            @if(request()->route('mensaje'))
-                @include('mensajes.chat')
-            @else
-                <div class="card bg-dark">
-                    <div class="card-body text-center text-muted">
-                        <i class="fas fa-comments fa-3x mb-3"></i>
-                        <h5>Selecciona una conversación para ver los mensajes</h5>
-                    </div>
-                </div>
-            @endif
-        </div>
     </div>
-</div>
-@endsection 
+</x-app-layout> 

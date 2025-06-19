@@ -66,7 +66,8 @@ class EstudianteController extends Controller
 
     public function edit(Estudiante $estudiante)
     {
-        return view('estudiantes.edit', compact('estudiante'));
+        $universidades = \App\Models\Universidad::all();
+        return view('estudiantes.edit', compact('estudiante', 'universidades'));
     }
 
     public function update(Request $request, Estudiante $estudiante)

@@ -12,12 +12,13 @@ class Estudiante extends Model
     protected $table = 'estudiantes';
 
     protected $fillable = [
+        'usuario_id',
         'codigo',
         'nombre',
-        'email',
         'telefono',
         'carrera',
         'semestre',
+        'universidad',
         'direccion',
         'activo'
     ];
@@ -27,8 +28,21 @@ class Estudiante extends Model
         'semestre' => 'integer'
     ];
 
+    // Relación con el usuario
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'usuario_id');
+    }
+
+    // Relación con préstamos
     public function prestamos()
     {
-        return $this->hasMany(Prestamo::class);
+        return $this->hasMany(Prestamo::class, 'estudiante_id');
+    }
+
+    // Relación con reservas
+    public function reservas()
+    {
+        return $this->hasMany(Reserva::class, 'estudiante_id');
     }
 } 

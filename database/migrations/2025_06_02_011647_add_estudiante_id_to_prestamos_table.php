@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('prestamos', function (Blueprint $table) {
             // Añadir nueva columna estudiante_id
             $table->unsignedBigInteger('estudiante_id')->nullable()->after('usuario_id');
-            $table->foreign('estudiante_id')->references('id')->on('estudiantes');
+            $table->foreign('estudiante_id')->references('id')->on('estudiantes')->onDelete('cascade');
             
             // Hacer usuario_id nullable para permitir la transición
             $table->unsignedBigInteger('usuario_id')->nullable()->change();

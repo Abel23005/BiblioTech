@@ -23,6 +23,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = auth()->user();
+        
+        if ($user->rol === 'alumno') {
+            if ($user->universidad_id === null) {
+                return redirect()->route('seleccionar.universidad');
+            }
+            return redirect()->route('alumno.dashboard');
+        }
+        
+        if ($user->rol === 'administrador') {
+            return redirect()->route('admin.dashboard');
+        }
+        
+        return redirect()->route('home');
     }
 }

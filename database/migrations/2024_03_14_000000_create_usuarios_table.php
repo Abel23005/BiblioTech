@@ -14,7 +14,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('rol', ['admin', 'bibliotecario', 'lector'])->default('lector');
+            $table->enum('rol', ['administrador', 'alumno'])->default('alumno');
+            $table->enum('universidad', ['TECSUP', 'UTP', 'UPN', 'UPC'])->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

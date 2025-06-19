@@ -60,55 +60,81 @@ Sistema de Gestión de Biblioteca Digital moderno y eficiente, diseñado para fa
 - Composer
 - Node.js >= 14.x
 - NPM >= 6.x
+- XAMPP (o similar con MySQL)
 
-## 🔧 Instalación
+## 🚀 Guía de Instalación
 
-1. Clonar el repositorio:
+### 1. Preparación del Entorno
+Asegúrate de tener instalado:
+- [XAMPP](https://www.apachefriends.org/es/download.html) (PHP 8.1 o superior)
+- [Composer](https://getcomposer.org/download/)
+- [Node.js](https://nodejs.org/)
+- [Git](https://git-scm.com/downloads)
+
+### 2. Clonar el Proyecto
 ```bash
-git clone https://github.com/tuusuario/BiblioTech.git
-cd BiblioTech
+# Crear carpeta para el proyecto
+mkdir biblioteca_web
+cd biblioteca_web
+
+# Clonar el repositorio
+git clone https://github.com/Abel23005/BiblioTech.git .
 ```
 
-2. Instalar dependencias de PHP:
+### 3. Configuración Inicial
 ```bash
+# Instalar dependencias de PHP
 composer install
-```
 
-3. Instalar dependencias de Node.js:
-```bash
+# Instalar dependencias de Node.js
 npm install
-```
 
-4. Configurar el entorno:
-```bash
-cp .env.example .env
+# Crear archivo de configuración
+copy .env.example .env
+
+# Generar clave de aplicación
 php artisan key:generate
 ```
 
-5. Configurar la base de datos en el archivo .env:
+### 4. Configuración de Base de Datos
+1. Abre XAMPP Control Panel
+2. Inicia Apache y MySQL
+3. Abre phpMyAdmin (http://localhost/phpmyadmin)
+4. Crea una nueva base de datos llamada 'biblioteca_web'
+5. Configura el archivo `.env`:
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=bibliotech
+DB_DATABASE=biblioteca_web
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-6. Ejecutar las migraciones:
+### 5. Finalizar Instalación
 ```bash
-php artisan migrate --seed
-```
+# Crear tablas en la base de datos
+php artisan migrate
 
-7. Iniciar el servidor:
-```bash
+# Compilar assets
+npm run dev
+
+# Iniciar el servidor
 php artisan serve
 ```
 
-8. Compilar assets:
-```bash
-npm run dev
-```
+### 6. Acceder al Proyecto
+Visita http://localhost:8000 en tu navegador
+
+### ❗ Solución de Problemas Comunes
+
+| Problema | Solución |
+|----------|----------|
+| Error de vendor/autoload.php | Ejecuta `composer install` |
+| Página sin estilos | Ejecuta `npm install && npm run dev` |
+| Error de base datos | Verifica que XAMPP esté corriendo |
+| Error de .env | Copia `.env.example` a `.env` |
+| Error de clave | Ejecuta `php artisan key:generate` |
 
 ## 📁 Estructura del Proyecto
 
@@ -165,16 +191,13 @@ Las contribuciones son bienvenidas. Por favor, lee [CONTRIBUTING.md](CONTRIBUTIN
 
 ## 📞 Soporte
 
-Si tienes alguna pregunta o problema, por favor contacta al equipo de desarrollo:
-
-- **Desarrollador Principal:** Abel23005
-- **Correo de Contacto:** [imer.qusipe@tecsup.edu.pe](mailto:imer.qusipe@tecsup.edu.pe)
-
-También puedes abrir un issue en el repositorio para reportar problemas o sugerir mejoras.
+Si tienes alguna pregunta o problema:
+- Abre un issue en el repositorio
+- Contacta al equipo: [imer.qusipe@tecsup.edu.pe](mailto:imer.qusipe@tecsup.edu.pe)
 
 ## 🎉 Agradecimientos
 
-- Al profesor Gonzalo Chrisjacq Suarez Garcia por su excelente guía y enseñanza
-- A todos los contribuidores que participan en este proyecto
-- A la comunidad de Laravel por su excelente documentación
-- A los usuarios por sus valiosos comentarios y sugerencias
+- Al profesor Gonzalo Chrisjacq Suarez Garcia
+- A todos los contribuidores del proyecto
+- A la comunidad de Laravel
+- A los usuarios por sus comentarios y sugerencias

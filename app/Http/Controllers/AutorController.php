@@ -2,54 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Autor;
 use Illuminate\Http\Request;
 
 class AutorController extends Controller
 {
     public function index()
     {
-        return view('seccion', [
-            'titulo' => 'Gestión de Autores',
-            'descripcion' => 'Aquí se mostrará la lista de autores registrados en la biblioteca.'
-        ]);
+        $autores = Autor::latest()->paginate(10);
+        return view('autores.index', compact('autores'));
     }
 
     public function create()
     {
-        return view('seccion', [
-            'titulo' => 'Registrar Autor',
-            'descripcion' => 'Formulario para registrar un nuevo autor en el sistema.'
-        ]);
+        return view('autores.create');
     }
 
     public function store(Request $request)
     {
-        return redirect()->route('autores.index');
-    }
-
-    public function show($id)
-    {
-        return view('seccion', [
-            'titulo' => 'Detalle del Autor',
-            'descripcion' => "Aquí se mostrará la información del autor con ID: $id"
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:autors',
+            'biografia' => 'nullable|string',
+        ], [
+            'nombre.required' => 'El nombre del autor es obligatorio.',
+            'nombre.unique' => 'Ya existe un autor con este nombre.',
         ]);
+
+        Autor::create($request->all());
+
+        return redirect()->route('autores.index')->with('success', 'Autor creado exitosamente.');
     }
 
-    public function edit($id)
+    public function show(Autor $autor)
     {
-        return view('seccion', [
-            'titulo' => 'Editar Autor',
-            'descripcion' => "Formulario para editar el autor con ID: $id"
+        return view('autores.show', compact('autor'));
+    }
+
+    public function edit(Autor $autor)
+    {
+        return view('autores.edit', compact('autor'));
+    }
+
+    public function update(Request $request, Autor $autor)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255|unique:autors,nombre,' . $autor->id,
+            'biografia' => 'nullable|string',
+        ], [
+            'nombre.required' => 'El nombre del autor es obligatorio.',
+            'nombre.unique' => 'Ya existe un autor con este nombre.',
         ]);
+
+        $autor->update($request->all());
+
+        return redirect()->route('autores.index')->with('success', 'Autor actualizado exitosamente.');
     }
 
-    public function update(Request $request, $id)
+    public function destroy(Autor $autor)
     {
-        return redirect()->route('autores.index');
-    }
+        if ($autor->libros()->exists()) {
+            return back()->with('error', 'No se puede eliminar el autor porque tiene libros asociados.');
+        }
 
-    public function destroy($id)
-    {
-        return redirect()->route('autores.index');
+        try {
+            $autor->delete();
+            return redirect()->route('autores.index')->with('success', 'Autor eliminado exitosamente.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'No se pudo eliminar el autor. Por favor, inténtalo de nuevo.');
+        }
     }
 }

@@ -41,4 +41,10 @@ class Libro extends Model
     {
         return $this->prestamos()->where('estado', 'activo')->first();
     }
+
+    // Relación muchos a muchos: usuarios que marcaron como favorito
+    public function usuariosFavoritos()
+    {
+        return $this->belongsToMany(User::class, 'favoritos', 'libro_id', 'usuario_id')->withTimestamps();
+    }
 }

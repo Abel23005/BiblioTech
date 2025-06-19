@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiblioTech</title>
+    <title>{{ config('app.name', 'BiblioTech') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
+            background-color: #F5EBD0;
             height: 100vh;
             margin: 0;
             overflow-x: hidden;
@@ -49,22 +49,22 @@
         .logo-title {
             font-size: 3.5rem;
             font-weight: 700;
-            color: #2c3e50;
+            color: #2C3E50;
             margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, #2c3e50, #3498db);
+            background: linear-gradient(45deg, #2C3E50, #3D9970);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
         .welcome-title {
             font-size: 2rem;
-            color: #34495e;
+            color: #2C3E50;
             margin-bottom: 1.5rem;
             font-weight: 600;
         }
         
         .description {
-            color: #7f8c8d;
+            color: #2C3E50;
             font-size: 1.1rem;
             line-height: 1.8;
             margin-bottom: 3rem;
@@ -84,36 +84,36 @@
         }
         
         .btn-primary {
-            background: linear-gradient(45deg, #3498db, #2980b9);
+            background: #3D9970;
             border: none;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 4px 15px rgba(61, 153, 112, 0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-            background: linear-gradient(45deg, #2980b9, #2573a7);
+            box-shadow: 0 6px 20px rgba(61, 153, 112, 0.4);
+            background: #2E7353;
         }
         
         .btn-secondary {
-            background: #ffffff;
-            color: #2c3e50;
-            border: 2px solid #e0e6ed;
+            background: #D4AF37;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
         
         .btn-secondary:hover {
-            background: #f8f9fa;
-            border-color: #cbd5e1;
+            background: #B38F2E;
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
         
         footer {
             text-align: center;
             padding: 1rem;
-            background-color: white;
-            color: #95a5a6;
+            background-color: #2C3E50;
+            color: white;
             font-size: 0.9rem;
-            border-top: 1px solid #f1f1f1;
         }
 
         @media (max-width: 992px) {
@@ -153,15 +153,14 @@
 <body>
     <div class="welcome-container">
         <div class="content-section">
-            <h1 class="logo-title">BiblioTech</h1>
-            <h2 class="welcome-title">Bienvenido a BiblioTech</h2>
+            <h1 class="logo-title">{{ config('app.name', 'BiblioTech') }}</h1>
+            <h2 class="welcome-title">{{ __('app.welcome') }}</h2>
             <p class="description">
-                Sistema de Gestión de Biblioteca Digital pensado para ti. 
-                Administra libros, usuarios y préstamos de forma sencilla y eficiente.
+                {{ __('app.welcome_message') }}
             </p>
             <div class="buttons-container">
-                <a href="{{ route('login') }}" class="btn btn-primary">Ingresar</a>
-                <a href="{{ route('register') }}" class="btn btn-secondary">Registrarse</a>
+                <a href="{{ route('login') }}" class="btn btn-primary">{{ __('app.login') }}</a>
+                <a href="{{ route('pre-register') }}" class="btn btn-secondary">{{ __('app.register') }}</a>
             </div>
         </div>
         <div class="image-section">
@@ -172,7 +171,7 @@
     </div>
     
     <footer>
-        &copy; {{ date('Y') }} BiblioTech - Todos los derechos reservados
+        &copy; {{ date('Y') }} {{ config('app.name', 'BiblioTech') }} - {{ __('app.copyright') }}
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

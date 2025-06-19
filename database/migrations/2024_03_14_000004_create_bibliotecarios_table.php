@@ -10,15 +10,14 @@ return new class extends Migration
     {
         Schema::create('bibliotecarios', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->string('nombre');
             $table->string('apellidos');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('telefono');
-            $table->enum('turno', ['matutino', 'vespertino', 'nocturno']);
+            $table->string('codigo')->unique();
+            $table->string('telefono')->nullable();
+            $table->enum('turno', ['matutino', 'vespertino', 'nocturno'])->nullable();
             $table->boolean('activo')->default(true);
-            $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }

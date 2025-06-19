@@ -1,139 +1,100 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\GoogleController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\MensajeController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\PrestamoController;
-use App\Http\Controllers\ReservaController;
-use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\AutorController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\MensajeController;
-/*use App\Http\Controllers\ProveedorController; */ 
 use App\Http\Controllers\EstudianteController;
-/*use App\Http\Controllers\BibliotecarioController;*/
-/*use App\Http\Controllers\VisitaController;*/
-use App\Http\Controllers\DatabaseController;
-use App\Http\Controllers\ReporteController;
-use App\Http\Controllers\ConfiguracionController;
-use App\Http\Controllers\BackupController;
-
-// Ruta principal redirige al dashboard si está autenticado, si no al login
-Auth::routes();
+use App\Http\Middleware\AdministradorMiddleware;
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('dashboard');
-    }
     return view('welcome');
 });
 
-// Rutas para préstamos
-Route::resource('prestamos', PrestamoController::class);
+// Rutas para autenticación con Google (deben estar fuera de cualquier grupo de middleware)
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
-// Rutas para libros
-Route::get('/libros', function () {
-    return view('seccion', [
-        'titulo' => 'Gestión de Libros',
-        'descripcion' => 'Aquí podrás registrar, editar, eliminar y consultar libros disponibles en la biblioteca.'
-    ]);
-});
-
-// Rutas para categorías
-Route::get('/categorias', function () {
-    return view('seccion', [
-        'titulo' => 'Gestión de Categorías',
-        'descripcion' => 'Permite organizar los libros por categorías para una mejor clasificación y búsqueda.'
-    ]);
-});
-
-// Rutas para autores
-Route::get('/autores', function () {
-    return view('seccion', [
-        'titulo' => 'Gestión de Autores',
-        'descripcion' => 'Sección para registrar y administrar los autores de los libros en la biblioteca.'
-    ]);
-});
-
-// Rutas para reservas
-Route::get('/reservas', function () {
-    return view('seccion', [
-        'titulo' => 'Gestión de Reservas',
-        'descripcion' => 'Aquí podrás gestionar las reservas de libros hechas por los usuarios.'
-    ]);
-});
-
-// Rutas del panel de control
 Route::get('/dashboard', function () {
-    return view('seccion', [
-        'titulo' => 'Panel de Control',
-        'descripcion' => 'Desde aquí podrás acceder a todas las funcionalidades principales del sistema, como la gestión de libros, préstamos, reservas y usuarios.'
-    ]);
-});
+    return view('dashboard');
+})->middleware(['auth', 'verified', App\Http\Middleware\RedirectBasedOnRole::class])->name('dashboard');
 
-// Rutas de autenticación
-/* 
-Route::get('/login', function () {
-    return view('seccion', [
-        'titulo' => 'Iniciar Sesión',
-        'descripcion' => 'Desde esta página los usuarios podrán iniciar sesión en el sistema para acceder a sus funciones personalizadas.'
-    ]);
-});
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
-Route::get('/register', function () {
-    return view('seccion', [
-        'titulo' => 'Registro de Usuario',
-        'descripcion' => 'Aquí los nuevos usuarios podrán registrarse para obtener acceso al sistema de gestión de biblioteca.'
-    ]);
-});
-*/
-
-
-
-// Rutas protegidas que requieren autenticación
-Route::middleware(['auth'])->group(function () {
-    // Redirigir /home al dashboard
-    Route::get('/home', function () {
-        return redirect('/dashboard');
+    // Rutas del Administrador
+    Route::middleware([AdministradorMiddleware::class])->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/admin/codigos', [AdminController::class, 'showCodes'])->name('admin.codigos.index');
+        Route::resource('usuarios', UsuarioController::class)->except(['show']);
+        Route::resource('libros', LibroController::class);
+        Route::resource('prestamos', PrestamoController::class);
+        Route::resource('estudiantes', EstudianteController::class);
+        Route::resource('universidads', App\Http\Controllers\UniversidadController::class);
+        Route::resource('autores', App\Http\Controllers\AutorController::class);
+        Route::resource('categorias', App\Http\Controllers\CategoriaController::class);
     });
 
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-    // Mensajes
+    // Rutas para Mensajes
     Route::resource('mensajes', MensajeController::class);
-    Route::patch('/mensajes/{mensaje}/responder', [MensajeController::class, 'responder'])->name('mensajes.responder');
-    Route::patch('/mensajes/{mensaje}/cerrar', [MensajeController::class, 'cerrar'])->name('mensajes.cerrar');
-    
-    // Libros
-    Route::resource('libros', LibroController::class);
-    
-    // Proveedores
-    /*Route::resource('proveedores', ProveedorController::class); */
-    
-    // Estudiantes
-    Route::resource('estudiantes', EstudianteController::class);
-    
-    // Bibliotecarios
-    /*Route::resource('bibliotecarios', BibliotecarioController::class);*/
-    
-    // Visitas
-    /*Route::resource('visitas', VisitaController::class);*/
-    
-    // Reportes
-    Route::get('/reportes/prestamos', [ReporteController::class, 'prestamos'])->name('reportes.prestamos');
+    Route::patch('mensajes/{mensaje}/responder', [MensajeController::class, 'responder'])->name('mensajes.responder');
+    Route::patch('mensajes/{mensaje}/cerrar', [MensajeController::class, 'cerrar'])->name('mensajes.cerrar');
+
+    // Rutas para Reportes
     Route::get('/reportes/usuarios', [ReporteController::class, 'usuarios'])->name('reportes.usuarios');
-    
-    // Configuración
-    Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.general');
-    
-    // Base de Datos y Backup
-    Route::prefix('database')->group(function () {
-        Route::get('/', [DatabaseController::class, 'index'])->name('database.index');
-        Route::post('/backup', [DatabaseController::class, 'backup'])->name('database.backup');
-        Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
-    });
-    
+    Route::get('/reportes/alumnos', [ReporteController::class, 'alumnos'])->name('reportes.alumnos');
+    Route::get('/reportes/bibliotecarios', [ReporteController::class, 'bibliotecarios'])->name('reportes.bibliotecarios');
+
+    // Rutas para Configuración
+    Route::get('/configuracion/general', [ConfiguracionController::class, 'index'])->name('configuracion.general');
+    Route::put('/configuracion', [ConfiguracionController::class, 'update'])->name('configuracion.update');
+    Route::put('/configuracion/notificaciones', [ConfiguracionController::class, 'notificaciones'])->name('configuracion.notificaciones');
+
+    // Nueva ruta para el dashboard del alumno
+    Route::get('alumno/dashboard', [App\Http\Controllers\AlumnoController::class, 'dashboard'])->name('alumno.dashboard');
+
+    // Nueva ruta para ver los préstamos del alumno
+    Route::get('alumno/prestamos', [App\Http\Controllers\AlumnoController::class, 'prestamos'])->name('alumno.prestamos');
+
+    // Nueva ruta para ver las reservas del alumno
+    Route::get('alumno/reservas', [App\Http\Controllers\AlumnoController::class, 'misReservas'])->name('alumno.reservas');
+
+    // Nueva ruta para ver el perfil del alumno
+    Route::get('alumno/perfil', [App\Http\Controllers\AlumnoController::class, 'perfil'])->name('alumno.perfil');
+
+    // Nueva ruta para buscar libros como alumno
+    Route::get('alumno/buscar-libros', [App\Http\Controllers\AlumnoController::class, 'buscarLibros'])->name('alumno.buscarLibros');
+
+    // Nueva ruta para actualizar el perfil del alumno
+    Route::post('alumno/actualizar-perfil', [App\Http\Controllers\AlumnoController::class, 'actualizarPerfil'])->name('alumno.actualizar-perfil');
+
+    // Ruta para el dashboard del bibliotecario
+    Route::get('bibliotecario/dashboard', [App\Http\Controllers\BibliotecarioController::class, 'dashboard'])->name('bibliotecario.dashboard');
 });
+
+// Ruta para el formulario previo de registro
+Route::get('pre-register', function () {
+    return view('auth.pre-register');
+})->name('pre-register');
+
+// Redirigir a pre-register si no hay tipo definido
+Route::get('register', function (\Illuminate\Http\Request $request) {
+    if (!$request->has('tipo')) {
+        return redirect()->route('pre-register');
+    }
+    // Si hay tipo, continuar con el flujo normal (el controlador RegisteredUserController)
+    return app(\App\Http\Controllers\Auth\RegisteredUserController::class)->create($request);
+});
+
+// Ruta POST para el registro de usuarios
+Route::post('register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register');
+
+require __DIR__.'/auth.php';

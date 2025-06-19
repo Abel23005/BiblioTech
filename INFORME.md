@@ -4,7 +4,7 @@
 ### Portada
 **Proyecto:** BiblioTech - Sistema de Gestión de Biblioteca Digital  
 **Integrantes:**
-- Abel Imer Quispe Mamani (Desarrollador Principal)
+- Abel Imer Quispe Quezada (Desarrollador Principal)
 - Sebastian Alva (Diseñador UI/UX)
 - Daniela Micaela Leon Andres (Diseñadora UI/UX)
 

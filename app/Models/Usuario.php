@@ -15,6 +15,7 @@ class Usuario extends Authenticatable
         'email',
         'password',
         'rol',
+        'universidad',
     ];
 
     protected $hidden = [
@@ -35,5 +36,29 @@ class Usuario extends Authenticatable
     public function reservas()
     {
         return $this->hasMany(Reserva::class);
+    }
+
+    // Relación con estudiante
+    public function estudiante()
+    {
+        return $this->hasOne(Estudiante::class);
+    }
+
+    // Relación con administrador
+    public function administrador()
+    {
+        return $this->hasOne(Administrador::class);
+    }
+
+    // Método para verificar si el usuario es estudiante
+    public function esEstudiante()
+    {
+        return $this->rol === 'alumno';
+    }
+
+    // Método para verificar si el usuario es administrador
+    public function esAdministrador()
+    {
+        return $this->rol === 'administrador';
     }
 }

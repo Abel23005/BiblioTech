@@ -10,11 +10,13 @@ class Reserva extends Model
         'libro_id',
         'usuario_id',
         'fecha_reserva',
-        'estado',
+        'fecha_vencimiento',
+        'estado'
     ];
 
     protected $casts = [
-        'fecha_reserva' => 'date',
+        'fecha_reserva' => 'datetime',
+        'fecha_vencimiento' => 'datetime'
     ];
 
     // Relaciones
@@ -25,6 +27,6 @@ class Reserva extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class);
+        return $this->belongsTo(User::class, 'usuario_id');
     }
 }

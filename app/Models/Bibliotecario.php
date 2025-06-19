@@ -3,31 +3,30 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Bibliotecario extends Authenticatable
+class Bibliotecario extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'nombre',
         'apellidos',
-        'email',
-        'password',
+        'codigo',
         'telefono',
         'turno',
         'activo'
     ];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
     protected $casts = [
         'activo' => 'boolean',
-        'email_verified_at' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function prestamos()
     {

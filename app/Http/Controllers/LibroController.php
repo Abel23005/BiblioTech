@@ -97,4 +97,30 @@ class LibroController extends Controller
             ->route('libros.index')
             ->with('success', 'Libro eliminado exitosamente');
     }
+
+    // Agregar libro a favoritos
+    public function agregarFavorito($libroId)
+    {
+        $user = auth()->user();
+        $user->agregarAFavoritos($libroId);
+        return back()->with('success', 'Libro agregado a favoritos.');
+    }
+
+    // Quitar libro de favoritos
+    public function quitarFavorito($libroId)
+    {
+        $user = auth()->user();
+        $user->quitarDeFavoritos($libroId);
+        return back()->with('success', 'Libro eliminado de favoritos.');
+    }
+
+    // Búsqueda de libros
+    public function buscar(Request $request)
+    {
+        $query = $request->input('q');
+        $libros = Libro::where('titulo', 'like', "%$query%")
+            ->orWhere('autor', 'like', "%$query%")
+            ->get();
+        return view('libros.index', compact('libros'));
+    }
 }
