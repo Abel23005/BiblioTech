@@ -16,38 +16,42 @@ class LibroSeeder extends Seeder
         $libros = [
             [
                 'titulo' => 'Cien años de soledad',
-                'autor_id' => 1,
-                'editorial' => 'Editorial Sudamericana',
-                'anio_publicacion' => 1967,
+                'autor' => 'Gabriel García Márquez',
                 'isbn' => '978-0307474728',
-                'categoria_id' => 1,
+                'categoria' => 'Literatura',
+                'descripcion' => 'Una obra maestra de la literatura latinoamericana',
+                'ubicacion' => 'Estante A1',
+                'estado' => 'bueno',
                 'disponible' => true
             ],
             [
                 'titulo' => 'El Aleph',
-                'autor_id' => 2,
-                'editorial' => 'Losada',
-                'anio_publicacion' => 1949,
+                'autor' => 'Jorge Luis Borges',
                 'isbn' => '978-0307475862',
-                'categoria_id' => 1,
+                'categoria' => 'Literatura',
+                'descripcion' => 'Colección de cuentos fantásticos',
+                'ubicacion' => 'Estante A2',
+                'estado' => 'bueno',
                 'disponible' => true
             ],
             [
                 'titulo' => 'La casa de los espíritus',
-                'autor_id' => 3,
-                'editorial' => 'Plaza & Janés',
-                'anio_publicacion' => 1982,
+                'autor' => 'Isabel Allende',
                 'isbn' => '978-0307474537',
-                'categoria_id' => 1,
+                'categoria' => 'Literatura',
+                'descripcion' => 'Novela familiar con elementos mágicos',
+                'ubicacion' => 'Estante A3',
+                'estado' => 'bueno',
                 'disponible' => true
             ],
             [
                 'titulo' => 'La ciudad y los perros',
-                'autor_id' => 4,
-                'editorial' => 'Seix Barral',
-                'anio_publicacion' => 1963,
+                'autor' => 'Mario Vargas Llosa',
                 'isbn' => '978-0307474889',
-                'categoria_id' => 1,
+                'categoria' => 'Literatura',
+                'descripcion' => 'Novela sobre la vida militar en Perú',
+                'ubicacion' => 'Estante A4',
+                'estado' => 'bueno',
                 'disponible' => true
             ]
         ];

@@ -11,24 +11,24 @@
      <?php $__env->slot('header', null, []); ?> 
         <h1 class="text-3xl font-bold text-blanco-humo"><?php echo app('translator')->get('app.universities_management'); ?></h1>
      <?php $__env->endSlot(); ?>
-    <div class="container mx-auto px-4 py-8 bg-principal rounded-lg shadow-lg">
-        <div class="flex justify-between items-center mb-6">
+<div class="container mx-auto px-4 py-8 bg-principal rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold text-blanco-humo">Gestionar Universidades</h1>
             <a href="#" class="bg-cta hover:bg-cta-dark text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                 + Nueva Universidad
             </a>
         </div>
-        <div class="overflow-x-auto bg-white rounded-lg shadow">
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-primary-header">
-                    <tr>
+                <tr>
                         <th class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Nombre</th>
                         <th class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Dirección</th>
                         <th class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Teléfono</th>
                         <th class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Correo Electrónico</th>
                         <th class="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Acciones</th>
-                    </tr>
-                </thead>
+                </tr>
+            </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-800">UTP</td>
@@ -74,9 +74,9 @@
                             <button class="text-red-600 hover:text-red-900 font-bold focus:outline-none">Eliminar</button>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
+    </div>
     </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>

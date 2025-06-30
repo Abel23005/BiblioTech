@@ -38,8 +38,10 @@ class AlumnoController extends Controller
         $libros_recomendados = Libro::inRandomOrder()
                                    ->take(4)
                                    ->get();
+        
+        $universidades = \App\Models\Universidad::all();
 
-        return view('alumno.dashboard', compact('prestamos', 'reservas', 'libros_recomendados'));
+        return view('alumno.dashboard', compact('prestamos', 'reservas', 'libros_recomendados', 'universidades'));
     }
 
     public function perfil()

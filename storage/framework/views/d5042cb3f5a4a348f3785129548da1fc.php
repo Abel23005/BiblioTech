@@ -9,51 +9,71 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('header', null, []); ?> 
-        <h2 class="font-semibold text-xl text-white leading-tight">
-            <?php echo e(__('app.admin_dashboard')); ?>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <?php echo e(__('Dashboard de Administrador')); ?>
 
         </h2>
      <?php $__env->endSlot(); ?>
 
-    <div class="py-12 bg-content">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <?php if(session('status')): ?>
-                        <div class="alert alert-success" role="alert">
-                            <?php echo e(session('status')); ?>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-                        </div>
-                    <?php endif; ?>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Información del Administrador -->
-                        <div class="bg-white shadow-lg rounded-lg p-6">
-                            <h5 class="text-xl font-bold text-primary-header mb-4"><?php echo e(__('app.admin_info')); ?></h5>
-                            <p class="text-gray-700 font-semibold mb-2"><?php echo e(auth()->user()->codigo); ?></p>
-                            <p class="text-gray-700 mb-1">
-                                <strong><?php echo e(__('app.name')); ?>:</strong> <?php echo e(auth()->user()->nombre); ?>
-
-                            </p>
-                            <p class="text-gray-700">
-                                <strong><?php echo e(__('app.email')); ?>:</strong> <?php echo e(auth()->user()->email); ?>
-
-                            </p>
-                        </div>
-
-                        <!-- Estadísticas Generales -->
-                        <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-                            <h5 class="text-xl font-bold text-primary-header mb-4"><?php echo e(__('app.general_statistics')); ?></h5>
-                            <h3 class="text-5xl font-extrabold text-blue-500 mb-2"><?php echo e($total_usuarios ?? 0); ?></h3>
-                            <p class="text-gray-600"><?php echo e(__('app.registered_students')); ?></p>
-                        </div>
-
-                        <!-- Acciones Rápidas -->
-                        <div class="bg-white shadow-lg rounded-lg p-6">
-                            <a href="<?php echo e(route('admin.codigos.index')); ?>" class="btn btn-primary btn-block btn-cta w-full flex items-center justify-center py-3">
-                                <i class="fas fa-key mr-2"></i> <?php echo e(__('app.view_codes')); ?>
-
-                            </a>
+    <div class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <!-- Logo Section -->
+            <div class="row justify-content-center mb-4">
+                <div class="col-lg-8 text-center">
+                    <img src="<?php echo e(asset('images/Logo de Biblotech.png')); ?>" alt="BiblioTech Logo" class="img-fluid" style="max-height: 120px; margin-bottom: 20px;">
+                    <h3 class="text-primary fw-bold">Sistema de Gestión Bibliotecaria</h3>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card shadow-lg border-0 rounded-lg mb-5">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h1 class="display-5 fw-bold text-primary">Bienvenido al Panel de Administración</h1>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-md-3 mb-3">
+                                    <div class="card text-white bg-primary h-100 shadow">
+                                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                            <i class="fas fa-users fa-2x mb-2"></i>
+                                            <h5 class="card-title">Usuarios</h5>
+                                            <h3><?php echo e(\App\Models\User::count()); ?></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card text-white bg-success h-100 shadow">
+                                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                            <i class="fas fa-book fa-2x mb-2"></i>
+                                            <h5 class="card-title">Libros</h5>
+                                            <h3><?php echo e(\App\Models\Libro::count()); ?></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card text-white bg-warning h-100 shadow">
+                                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                            <i class="fas fa-exchange-alt fa-2x mb-2"></i>
+                                            <h5 class="card-title">Préstamos</h5>
+                                            <h3><?php echo e(\App\Models\Prestamo::count()); ?></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card text-white bg-info h-100 shadow">
+                                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                            <i class="fas fa-university fa-2x mb-2"></i>
+                                            <h5 class="card-title">Universidades</h5>
+                                            <h3><?php echo e(\App\Models\Universidad::count()); ?></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

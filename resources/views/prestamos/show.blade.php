@@ -64,17 +64,17 @@ use Carbon\Carbon;
                                     <div class="card-body">
                                         <dl class="row mb-0">
                                             <dt class="col-sm-4">Nombre:</dt>
-                                            <dd class="col-sm-8">{{ $prestamo->estudiante->nombre }}</dd>
+                                            <dd class="col-sm-8">{{ $prestamo->usuario->nombre ?? 'Sin usuario' }}</dd>
 
                                             <dt class="col-sm-4">Código:</dt>
-                                            <dd class="col-sm-8">{{ $prestamo->estudiante->codigo }}</dd>
+                                            <dd class="col-sm-8">{{ $prestamo->usuario->codigo ?? 'Sin usuario' }}</dd>
 
                                             <dt class="col-sm-4">Email:</dt>
-                                            <dd class="col-sm-8">{{ $prestamo->estudiante->email }}</dd>
+                                            <dd class="col-sm-8">{{ $prestamo->usuario->email ?? 'Sin usuario' }}</dd>
 
                                             <dt class="col-sm-4">Estado:</dt>
                                             <dd class="col-sm-8">
-                                                @if($prestamo->estudiante->activo)
+                                                @if($prestamo->usuario->activo)
                                                     <span class="badge bg-success">Activo</span>
                                                 @else
                                                     <span class="badge bg-danger">Inactivo</span>

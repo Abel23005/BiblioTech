@@ -10,7 +10,7 @@ class AdministradorMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check() || Auth::user()->rol !== 'administrador') {
+        if (!Auth::check() || !in_array(Auth::user()->rol, ['administrador', 'bibliotecario'])) {
             return redirect()->route('home')->with('error', 'Acceso no autorizado.');
         }
 

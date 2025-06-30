@@ -59,7 +59,7 @@
                                         <?php if($usuario->rol === 'alumno'): ?>
                                             <?php $hayAlumnos = true; ?>
                                             <tr>
-                                                <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->name); ?></td>
+                                                <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->nombre); ?></td>
                                                 <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->email); ?></td>
                                                 <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->universidad->nombre ?? 'Sin universidad'); ?></td>
                                                 <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->rol); ?></td>
@@ -77,49 +77,6 @@
                                     <?php if(!$hayAlumnos): ?>
                                         <tr>
                                             <td colspan="4" class="py-3 px-4 text-center text-gray-500">No hay alumnos registrados.</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Bibliotecarios -->
-                        <h2 class="text-xl font-bold text-primary-header mb-2 mt-6">Bibliotecarios</h2>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
-                                <thead>
-                                    <tr class="bg-primary-header text-white">
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.name')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.email')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.university')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.role')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.actions')); ?></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $hayBiblios = false; ?>
-                                    <?php $__currentLoopData = $usuarios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if($usuario->rol === 'bibliotecario'): ?>
-                                            <?php $hayBiblios = true; ?>
-                                            <tr>
-                                                <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->name); ?></td>
-                                                <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->email); ?></td>
-                                                <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->universidad->nombre ?? 'Sin universidad'); ?></td>
-                                                <td class="py-3 px-4 border-b border-gray-200"><?php echo e($usuario->rol); ?></td>
-                                                <td class="py-3 px-4 border-b border-gray-200 flex space-x-2">
-                                                    <a href="<?php echo e(route('usuarios.edit', $usuario->id)); ?>" class="btn-cta px-3 py-1 rounded-md text-xs font-semibold"><?php echo e(__('app.edit')); ?></a>
-                                                    <form action="<?php echo e(route('usuarios.destroy', $usuario->id)); ?>" method="POST" onsubmit="return confirm('<?php echo e(__('app.are_you_sure')); ?>');">
-                                                        <?php echo csrf_field(); ?>
-                                                        <?php echo method_field('DELETE'); ?>
-                                                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-xs font-semibold"><?php echo e(__('app.delete')); ?></button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        <?php endif; ?>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    <?php if(!$hayBiblios): ?>
-                                        <tr>
-                                            <td colspan="4" class="py-3 px-4 text-center text-gray-500">No hay bibliotecarios registrados.</td>
                                         </tr>
                                     <?php endif; ?>
                                 </tbody>

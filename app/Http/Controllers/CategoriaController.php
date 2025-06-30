@@ -3,28 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Categoria;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriaController extends Controller
 {
     public function index()
     {
-        return view('seccion', [
-            'titulo' => 'Gestión de Categorías',
-            'descripcion' => 'Aquí se mostrará la lista de categorías utilizadas para clasificar los libros.'
-        ]);
+        $user = Auth::user();
+        $categorias = Categoria::where('universidad_id', $user->universidad_id)->paginate(10);
+        return view('categorias.index', compact('categorias'));
     }
 
     public function create()
     {
-        return view('seccion', [
-            'titulo' => 'Registrar Categoría',
-            'descripcion' => 'Formulario para registrar una nueva categoría de libros.'
-        ]);
+        return view('categorias.create');
     }
 
     public function store(Request $request)
     {
-        return redirect()->route('categorias.index');
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+        ]);
+        $user = Auth::user();
+        Categoria::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'universidad_id' => $user->universidad_id,
+        ]);
+        return redirect()->route('categorias.index')->with('success', 'Categoría creada exitosamente.');
     }
 
     public function show($id)
@@ -37,19 +45,31 @@ class CategoriaController extends Controller
 
     public function edit($id)
     {
-        return view('seccion', [
-            'titulo' => 'Editar Categoría',
-            'descripcion' => "Formulario para editar la categoría con ID: $id"
-        ]);
+        $user = Auth::user();
+        $categoria = Categoria::where('id', $id)->where('universidad_id', $user->universidad_id)->firstOrFail();
+        return view('categorias.edit', compact('categoria'));
     }
 
     public function update(Request $request, $id)
     {
-        return redirect()->route('categorias.index');
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+        ]);
+        $user = Auth::user();
+        $categoria = Categoria::where('id', $id)->where('universidad_id', $user->universidad_id)->firstOrFail();
+        $categoria->update([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+        ]);
+        return redirect()->route('categorias.index')->with('success', 'Categoría actualizada exitosamente.');
     }
 
     public function destroy($id)
     {
-        return redirect()->route('categorias.index');
+        $user = Auth::user();
+        $categoria = Categoria::where('id', $id)->where('universidad_id', $user->universidad_id)->firstOrFail();
+        $categoria->delete();
+        return redirect()->route('categorias.index')->with('success', 'Categoría eliminada exitosamente.');
     }
 }

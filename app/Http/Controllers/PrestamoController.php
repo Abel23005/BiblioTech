@@ -12,7 +12,7 @@ class PrestamoController extends Controller
 {
     public function index()
     {
-        $prestamos = Prestamo::with(['libro', 'estudiante'])
+        $prestamos = Prestamo::with(['libro', 'usuario'])
             ->latest()
             ->paginate(10);
         return view('prestamos.index', compact('prestamos'));
@@ -77,7 +77,7 @@ class PrestamoController extends Controller
 
     public function show(Prestamo $prestamo)
     {
-        $prestamo->load(['libro', 'estudiante']);
+        $prestamo->load(['libro', 'usuario']);
         return view('prestamos.show', compact('prestamo'));
     }
 

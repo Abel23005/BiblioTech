@@ -24,7 +24,7 @@
                         @endif
 
                         <div class="bg-white shadow-lg rounded-lg p-6">
-                            <form action="{{ route('libros.store') }}" method="POST">
+                            <form action="{{ route('libros.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -145,6 +145,15 @@
                                     </div>
                                 </div>
 
+                                <div class="mb-4">
+                                    <label for="portada" class="block text-sm font-medium text-gray-700 mb-1">Portada (imagen)</label>
+                                    <input type="file" accept="image/*" class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 @error('portada') border-red-500 @enderror" id="portada" name="portada">
+                                    <span class="text-xs text-gray-500 mt-2">Formatos permitidos: jpg, png, webp, gif. Tamaño máximo: 2MB.</span>
+                                    @error('portada')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
                                 <div class="flex justify-end gap-2 mt-4">
                                     <button type="reset" class="btn-cta px-4 py-2 rounded-md font-semibold text-xs uppercase tracking-widest">
                                         <i class="fas fa-undo mr-2"></i> {{ __('app.reset') }}
@@ -171,6 +180,22 @@
             });
         }
     });
+
+    function previewPortada(event) {
+        const input = event.target;
+        const preview = document.getElementById('preview-portada');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = '';
+            preview.classList.add('hidden');
+        }
+    }
     </script>
     @endpush
 </x-app-layout> 

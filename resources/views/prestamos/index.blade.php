@@ -51,7 +51,7 @@ use Carbon\Carbon;
                                         <tr>
                                             <td class="py-3 px-4 whitespace-nowrap">{{ $prestamo->id }}</td>
                                             <td class="py-3 px-4 whitespace-nowrap">{{ $prestamo->libro->titulo }}</td>
-                                            <td class="py-3 px-4 whitespace-nowrap">{{ $prestamo->estudiante->nombre }}</td>
+                                            <td class="py-3 px-4 whitespace-nowrap">{{ $prestamo->usuario->nombre }}</td>
                                             <td class="py-3 px-4 whitespace-nowrap">{{ Carbon::parse($prestamo->fecha_prestamo)->format('d/m/Y') }}</td>
                                             <td class="py-3 px-4 whitespace-nowrap">{{ Carbon::parse($prestamo->fecha_devolucion)->format('d/m/Y') }}</td>
                                             <td class="py-3 px-4 whitespace-nowrap">

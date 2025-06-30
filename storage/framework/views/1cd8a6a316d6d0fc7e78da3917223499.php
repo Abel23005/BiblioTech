@@ -10,8 +10,7 @@
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('header', null, []); ?> 
         <h2 class="font-semibold text-xl text-white leading-tight">
-            <?php echo e(__('app.books_management')); ?>
-
+            Libros
         </h2>
      <?php $__env->endSlot(); ?>
 
@@ -19,105 +18,63 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <div class="container-fluid px-4">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-3xl font-extrabold text-primary-header"><?php echo e(__('app.books_management')); ?></h2>
+                    <div class="container">
+                        <div class="flex justify-between items-center mb-6">
+                            <h1 class="text-3xl font-extrabold text-primary-header">Gestión de Libros</h1>
                             <a href="<?php echo e(route('libros.create')); ?>" class="btn-confirm px-4 py-2 rounded-md font-semibold text-xs uppercase tracking-widest">
-                                <i class="fas fa-plus-circle mr-2"></i> <?php echo e(__('app.add_new')); ?>
-
+                                <i class="fas fa-plus-circle mr-2"></i> Agregar Libro
                             </a>
                         </div>
-
-                        <?php if(session('success')): ?>
-                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                                <span class="block sm:inline"><?php echo e(session('success')); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if(session('error')): ?>
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                                <span class="block sm:inline"><?php echo e(session('error')); ?></span>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="overflow-x-auto bg-white border border-gray-200 rounded-lg shadow-md">
-                            <table class="min-w-full divide-y divide-gray-200">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
                                 <thead>
                                     <tr class="bg-primary-header text-white">
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">ID</th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.title')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.author')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.isbn')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.category')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.status')); ?></th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider"><?php echo e(__('app.actions')); ?></th>
+                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">Título</th>
+                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">Autor</th>
+                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">Categoría</th>
+                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">Disponible</th>
+                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody>
                                     <?php $__empty_1 = true; $__currentLoopData = $libros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $libro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                         <tr>
-                                            <td class="py-3 px-4 whitespace-nowrap"><?php echo e($libro->id); ?></td>
-                                            <td class="py-3 px-4 whitespace-nowrap"><?php echo e($libro->titulo); ?></td>
-                                            <td class="py-3 px-4 whitespace-nowrap"><?php echo e($libro->autor); ?></td>
-                                            <td class="py-3 px-4 whitespace-nowrap"><?php echo e($libro->isbn); ?></td>
-                                            <td class="py-3 px-4 whitespace-nowrap"><?php echo e($libro->categoria); ?></td>
-                                            <td class="py-3 px-4 whitespace-nowrap">
+                                            <td class="py-3 px-4 border-b border-gray-200"><?php echo e($libro->titulo); ?></td>
+                                            <td class="py-3 px-4 border-b border-gray-200"><?php echo e($libro->autor->nombre ?? '-'); ?></td>
+                                            <td class="py-3 px-4 border-b border-gray-200"><?php echo e($libro->categoria->nombre ?? '-'); ?></td>
+                                            <td class="py-3 px-4 border-b border-gray-200">
                                                 <?php if($libro->disponible): ?>
-                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"><?php echo e(__('app.available')); ?></span>
+                                                    <span class="text-green-600 font-bold">Sí</span>
                                                 <?php else: ?>
-                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"><?php echo e(__('app.loaned')); ?></span>
+                                                    <span class="text-red-600 font-bold">No</span>
                                                 <?php endif; ?>
                                             </td>
-                                            <td class="py-3 px-4 whitespace-nowrap text-sm font-medium">
-                                                <div class="flex space-x-2">
-                                                    <a href="<?php echo e(route('libros.show', $libro)); ?>" 
-                                                       class="btn-cta px-3 py-1 rounded-md text-xs font-semibold" 
-                                                       title="<?php echo e(__('app.details')); ?>">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="<?php echo e(route('libros.edit', $libro)); ?>" 
-                                                       class="btn-confirm px-3 py-1 rounded-md text-xs font-semibold" 
-                                                       title="<?php echo e(__('app.edit')); ?>">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <button type="button" 
-                                                            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-xs font-semibold"
-                                                            title="<?php echo e(__('app.delete')); ?>"
-                                                            onclick="confirmarEliminacion('<?php echo e($libro->id); ?>')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </div>
+                                            <td class="py-3 px-4 border-b border-gray-200 flex space-x-2">
+                                                <a href="<?php echo e(route('libros.edit', $libro->id)); ?>" class="btn-cta px-3 py-1 rounded-md text-xs font-semibold">Editar</a>
+                                                <form action="<?php echo e(route('libros.destroy', $libro->id)); ?>" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este libro?');">
+                                                    <?php echo csrf_field(); ?>
+                                                    <?php echo method_field('DELETE'); ?>
+                                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-xs font-semibold">Eliminar</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                         <tr>
-                                            <td colspan="7" class="py-3 px-4 text-center text-gray-500"><?php echo e(__('app.no_results')); ?></td>
+                                            <td colspan="5" class="py-3 px-4 text-center text-gray-500">No hay libros registrados.</td>
                                         </tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
-
-                        <div class="mt-4 flex justify-end">
+                        <div class="mt-4">
                             <?php echo e($libros->links()); ?>
 
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <?php $__env->startPush('scripts'); ?>
-    <script>
-    function confirmarEliminacion(id) {
-        if (confirm('<?php echo e(__('app.are_you_sure')); ?>')) {
-            document.getElementById('form-eliminar-' + id).submit();
-        }
-    }
-    </script>
-    <?php $__env->stopPush(); ?>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

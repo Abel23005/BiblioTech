@@ -54,13 +54,13 @@
 
                         <!-- Acciones Rápidas -->
                         <div class="bg-white shadow-lg rounded-lg p-6">
-                            <a href="#" class="btn btn-primary btn-block btn-cta w-full flex items-center justify-center py-3 mb-2">
+                            <a href="<?php echo e(route('prestamos.index')); ?>" class="btn btn-primary btn-block btn-cta w-full flex items-center justify-center py-3 mb-2">
                                 <i class="fas fa-book mr-2"></i> Gestionar Préstamos
                             </a>
-                            <a href="#" class="btn btn-info btn-block w-full flex items-center justify-center py-3 mb-2">
+                            <a href="<?php echo e(route('reservas.index')); ?>" class="btn btn-info btn-block w-full flex items-center justify-center py-3 mb-2">
                                 <i class="fas fa-calendar-check mr-2"></i> Gestionar Reservas
                             </a>
-                            <a href="#" class="btn btn-success btn-block w-full flex items-center justify-center py-3">
+                            <a href="<?php echo e(route('libros.create')); ?>" class="btn btn-success btn-block w-full flex items-center justify-center py-3">
                                 <i class="fas fa-plus mr-2"></i> Añadir Nuevo Libro
                             </a>
                         </div>

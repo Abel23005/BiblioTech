@@ -27,7 +27,8 @@ class LibroController extends Controller
             'categoria' => 'required|string',
             'descripcion' => 'nullable|string',
             'ubicacion' => 'nullable|string|max:50',
-            'estado' => 'required|in:nuevo,bueno,regular,deteriorado'
+            'estado' => 'required|in:nuevo,bueno,regular,deteriorado',
+            'portada' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048'
         ], [
             'titulo.required' => 'El título es obligatorio',
             'autor.required' => 'El autor es obligatorio',
@@ -35,8 +36,16 @@ class LibroController extends Controller
             'isbn.unique' => 'Este ISBN ya está registrado',
             'categoria.required' => 'La categoría es obligatoria',
             'estado.required' => 'El estado es obligatorio',
-            'estado.in' => 'El estado seleccionado no es válido'
+            'estado.in' => 'El estado seleccionado no es válido',
+            'portada.image' => 'El archivo debe ser una imagen',
+            'portada.mimes' => 'La imagen debe ser jpeg, png, jpg, gif o webp',
+            'portada.max' => 'La imagen no debe superar los 2MB'
         ]);
+
+        $portadaPath = null;
+        if ($request->hasFile('portada')) {
+            $portadaPath = $request->file('portada')->store('portadas', 'public');
+        }
 
         $libro = Libro::create([
             'titulo' => $request->titulo,
@@ -44,6 +53,7 @@ class LibroController extends Controller
             'isbn' => $request->isbn,
             'categoria' => $request->categoria,
             'descripcion' => $request->descripcion,
+            'portada' => $portadaPath,
             'ubicacion' => $request->ubicacion,
             'estado' => $request->estado,
             'disponible' => true

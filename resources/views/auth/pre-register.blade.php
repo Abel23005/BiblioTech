@@ -15,10 +15,10 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Continuar</button>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Siguiente</button>
         </form>
     </div>
-    <script>
+<script>
         document.getElementById('preRegisterForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const tipo = document.querySelector('input[name="tipo"]:checked').value;
@@ -27,6 +27,6 @@
             } else if (tipo === 'bibliotecario') {
                 window.location.href = "{{ route('register') }}?tipo=bibliotecario";
             }
-        });
-    </script>
+    });
+</script>
 </x-guest-layout> 

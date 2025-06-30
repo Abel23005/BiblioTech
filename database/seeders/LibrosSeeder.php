@@ -12,6 +12,7 @@ class LibrosSeeder extends Seeder
      */
     public function run(): void
     {
+        \App\Models\Libro::truncate();
         $libros = [
             [
                 'titulo' => 'Cien años de soledad',

@@ -48,7 +48,7 @@
                                         @if ($usuario->rol === 'alumno')
                                             @php $hayAlumnos = true; @endphp
                                             <tr>
-                                                <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->name }}</td>
+                                                <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->nombre }}</td>
                                                 <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->email }}</td>
                                                 <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->universidad->nombre ?? 'Sin universidad' }}</td>
                                                 <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->rol }}</td>
@@ -66,49 +66,6 @@
                                     @if(!$hayAlumnos)
                                         <tr>
                                             <td colspan="4" class="py-3 px-4 text-center text-gray-500">No hay alumnos registrados.</td>
-                                        </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Bibliotecarios -->
-                        <h2 class="text-xl font-bold text-primary-header mb-2 mt-6">Bibliotecarios</h2>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
-                                <thead>
-                                    <tr class="bg-primary-header text-white">
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">{{ __('app.name') }}</th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">{{ __('app.email') }}</th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">{{ __('app.university') }}</th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">{{ __('app.role') }}</th>
-                                        <th class="py-3 px-4 text-left text-xs font-semibold uppercase tracking-wider">{{ __('app.actions') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php $hayBiblios = false; @endphp
-                                    @foreach ($usuarios as $usuario)
-                                        @if ($usuario->rol === 'bibliotecario')
-                                            @php $hayBiblios = true; @endphp
-                                            <tr>
-                                                <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->name }}</td>
-                                                <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->email }}</td>
-                                                <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->universidad->nombre ?? 'Sin universidad' }}</td>
-                                                <td class="py-3 px-4 border-b border-gray-200">{{ $usuario->rol }}</td>
-                                                <td class="py-3 px-4 border-b border-gray-200 flex space-x-2">
-                                                    <a href="{{ route('usuarios.edit', $usuario->id) }}" class="btn-cta px-3 py-1 rounded-md text-xs font-semibold">{{ __('app.edit') }}</a>
-                                                    <form action="{{ route('usuarios.destroy', $usuario->id) }}" method="POST" onsubmit="return confirm('{{ __('app.are_you_sure') }}');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-xs font-semibold">{{ __('app.delete') }}</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                    @if(!$hayBiblios)
-                                        <tr>
-                                            <td colspan="4" class="py-3 px-4 text-center text-gray-500">No hay bibliotecarios registrados.</td>
                                         </tr>
                                     @endif
                                 </tbody>

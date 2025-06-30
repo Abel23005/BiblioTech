@@ -43,9 +43,9 @@ class RegisteredUserController extends Controller
             ];
             $dominio = $dominios[$universidad->name] ?? null;
 
-            $request->validate([
-                'nombre' => ['required', 'string', 'max:255'],
-                'apellidos' => ['required', 'string', 'max:255'],
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'apellidos' => ['required', 'string', 'max:255'],
                 'email' => [
                     'required',
                     'string',
@@ -59,17 +59,17 @@ class RegisteredUserController extends Controller
                         }
                     }
                 ],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                'universidad_id' => ['required', 'exists:universidads,id'],
-            ]);
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'universidad_id' => ['required', 'exists:universidads,id'],
+        ]);
 
-            $user = User::create([
-                'nombre' => $request->nombre,
-                'apellidos' => $request->apellidos,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'rol' => 'alumno',
-                'universidad_id' => $request->universidad_id,
+        $user = User::create([
+            'nombre' => $request->nombre,
+            'apellidos' => $request->apellidos,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'rol' => 'alumno',
+            'universidad_id' => $request->universidad_id,
             ]);
         } elseif ($tipo === 'bibliotecario') {
             $request->validate([
@@ -88,8 +88,8 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
                 'rol' => 'bibliotecario',
                 'universidad_id' => $request->universidad_id,
-                'codigo' => $request->codigo,
-            ]);
+            'codigo' => $request->codigo,
+        ]);
         } else {
             abort(400, 'Tipo de registro no válido.');
         }

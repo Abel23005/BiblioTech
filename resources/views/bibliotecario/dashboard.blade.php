@@ -7,6 +7,14 @@
 
     <div class="py-12 bg-content">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Logo Section -->
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-6">
+                <div class="p-6 text-center">
+                    <img src="{{ asset('images/Logo de Biblotech.png') }}" alt="BiblioTech Logo" class="mx-auto" style="max-height: 100px; margin-bottom: 15px;">
+                    <h3 class="text-primary-header font-bold text-xl">Panel de Bibliotecario</h3>
+                </div>
+            </div>
+            
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @if (session('status'))
@@ -41,13 +49,13 @@
 
                         <!-- Acciones Rápidas -->
                         <div class="bg-white shadow-lg rounded-lg p-6">
-                            <a href="#" class="btn btn-primary btn-block btn-cta w-full flex items-center justify-center py-3 mb-2">
+                            <a href="{{ route('prestamos.index') }}" class="btn btn-primary btn-block btn-cta w-full flex items-center justify-center py-3 mb-2">
                                 <i class="fas fa-book mr-2"></i> Gestionar Préstamos
                             </a>
-                            <a href="#" class="btn btn-info btn-block w-full flex items-center justify-center py-3 mb-2">
+                            <a href="{{ route('reservas.index') }}" class="btn btn-info btn-block w-full flex items-center justify-center py-3 mb-2">
                                 <i class="fas fa-calendar-check mr-2"></i> Gestionar Reservas
                             </a>
-                            <a href="#" class="btn btn-success btn-block w-full flex items-center justify-center py-3">
+                            <a href="{{ route('libros.create') }}" class="btn btn-success btn-block w-full flex items-center justify-center py-3">
                                 <i class="fas fa-plus mr-2"></i> Añadir Nuevo Libro
                             </a>
                         </div>

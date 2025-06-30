@@ -15,7 +15,7 @@
         <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     </head>
     <body class="font-sans text-slate-800 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white">
             <div>
                 <a href="/">
                     <img src="<?php echo e(asset('images/Logo de Biblotech.png')); ?>" alt="Logo de BiblioTech" class="w-20 h-20 fill-current text-blue-700" />

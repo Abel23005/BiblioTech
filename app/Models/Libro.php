@@ -12,9 +12,11 @@ class Libro extends Model
         'isbn',
         'categoria',
         'descripcion',
+        'portada',
         'ubicacion',
         'estado',
-        'disponible'
+        'disponible',
+        'universidad_id'
     ];
 
     protected $casts = [
@@ -46,5 +48,10 @@ class Libro extends Model
     public function usuariosFavoritos()
     {
         return $this->belongsToMany(User::class, 'favoritos', 'libro_id', 'usuario_id')->withTimestamps();
+    }
+
+    public function universidad()
+    {
+        return $this->belongsTo(\App\Models\Universidad::class);
     }
 }

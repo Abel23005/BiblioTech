@@ -19,23 +19,23 @@
                 Estos códigos son únicos y permanentes. Todo bibliotecario debe seleccionar su universidad y luego ingresar el código correspondiente para poder registrarse. <strong>No se pueden cambiar ni eliminar.</strong>
             </p>
             <table class="table-auto w-full border-collapse">
-                <thead>
+                            <thead>
                     <tr class="bg-gray-100">
                         <th class="px-4 py-2 border">ID</th>
                         <th class="px-4 py-2 border">Nombre de Universidad</th>
                         <th class="px-4 py-2 border">Código de Registro</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $__currentLoopData = $universidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $universidad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $__currentLoopData = $universidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $universidad): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
                             <td class="border px-4 py-2"><?php echo e($universidad->id); ?></td>
                             <td class="border px-4 py-2"><?php echo e($universidad->name); ?></td>
                             <td class="border px-4 py-2 font-bold"><?php echo e($universidad->codigo_registro); ?></td>
-                        </tr>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </tbody>
-            </table>
+                                    </tr>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </tbody>
+                        </table>
         </div>
     </div>
  <?php echo $__env->renderComponent(); ?>

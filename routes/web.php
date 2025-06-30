@@ -30,13 +30,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Rutas de libros accesibles para admin y bibliotecario
+    Route::resource('libros', LibroController::class);
+    // Rutas de préstamos y reservas accesibles para admin y bibliotecario
+    Route::resource('prestamos', PrestamoController::class);
+    Route::resource('reservas', App\Http\Controllers\ReservaController::class);
+
     // Rutas del Administrador
     Route::middleware([AdministradorMiddleware::class])->group(function () {
         Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/admin/codigos', [AdminController::class, 'showCodes'])->name('admin.codigos.index');
         Route::resource('usuarios', UsuarioController::class)->except(['show']);
-        Route::resource('libros', LibroController::class);
-        Route::resource('prestamos', PrestamoController::class);
         Route::resource('estudiantes', EstudianteController::class);
         Route::resource('universidads', App\Http\Controllers\UniversidadController::class);
         Route::resource('autores', App\Http\Controllers\AutorController::class);
@@ -96,5 +100,9 @@ Route::get('register', function (\Illuminate\Http\Request $request) {
 
 // Ruta POST para el registro de usuarios
 Route::post('register', [App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register');
+
+Route::get('/home', function () {
+    return view('welcome');
+})->name('home');
 
 require __DIR__.'/auth.php';

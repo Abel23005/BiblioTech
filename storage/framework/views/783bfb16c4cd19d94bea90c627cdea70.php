@@ -15,84 +15,21 @@
         </h2>
      <?php $__env->endSlot(); ?>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="container-fluid p-0">
-                        <!-- Hero Section con Imagen de Biblioteca -->
-                        <div class="hero-section position-relative">
-                            <div class="overlay"></div>
-                            <div class="hero-content text-center text-white">
-                                <h1 class="display-4 fw-bold mb-4">Bienvenido a tu Biblioteca Virtual</h1>
-                                <h2 class="h3 mb-4"><?php echo e(auth()->user()->universidad); ?></h2>
-                                <button id="sidebarToggle" class="btn btn-light btn-lg px-4 py-2">
-                                    <i class="fas fa-bars me-2"></i> Abrir Menú
-                                </button>
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="py-5 bg-light min-vh-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card shadow-lg border-0 rounded-lg mb-5">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h1 class="display-5 fw-bold text-primary">Bienvenido a tu Biblioteca Virtual</h1>
+                                <h2 class="h4 text-secondary mb-4"><?php echo e(auth()->user()->universidad->name ?? ''); ?></h2>
                             </div>
-                        </div>
-
-                        <!-- Contenido Principal -->
-                        <div class="container mt-5">
-                            <div class="row g-4">
-                                <!-- Información Personal -->
-                                <div class="col-md-4">
-                                    <div class="card shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="card-title mb-3">Información Personal</h5>
-                                            <p class="card-text">
-                                                <strong>Código:</strong> <?php echo e(auth()->user()->codigo); ?><br>
-                                                <strong>Nombre:</strong> <?php echo e(auth()->user()->nombre); ?><br>
-                                                <strong>Email:</strong> <?php echo e(auth()->user()->email); ?><br>
-                                                <strong>Universidad:</strong> <?php echo e(auth()->user()->universidad); ?>
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Préstamos Activos -->
-                                <div class="col-md-4">
-                                    <div class="card shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="card-title mb-3">Préstamos Activos</h5>
-                                            <p class="card-text">
-                                                <?php if(isset($prestamos_activos) && count($prestamos_activos) > 0): ?>
-                                                    <ul class="list-unstyled">
-                                                        <?php $__currentLoopData = $prestamos_activos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prestamo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <li class="mb-2"><?php echo e($prestamo->libro->titulo); ?></li>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </ul>
-                                                <?php else: ?>
-                                                    <p>No tienes préstamos activos.</p>
-                                                <?php endif; ?>
-                                            </p>
-                                            <a href="<?php echo e(route('alumno.prestamos')); ?>" class="btn btn-primary">Ver Todos</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Reservas Pendientes -->
-                                <div class="col-md-4">
-                                    <div class="card shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="card-title mb-3">Reservas Pendientes</h5>
-                                            <p class="card-text">
-                                                <?php if(isset($reservas_pendientes) && count($reservas_pendientes) > 0): ?>
-                                                    <ul class="list-unstyled">
-                                                        <?php $__currentLoopData = $reservas_pendientes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $reserva): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <li class="mb-2"><?php echo e($reserva->libro->titulo); ?></li>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </ul>
-                                                <?php else: ?>
-                                                    <p>No tienes reservas pendientes.</p>
-                                                <?php endif; ?>
-                                            </p>
-                                            <a href="<?php echo e(route('alumno.reservas')); ?>" class="btn btn-warning">Ver Todas</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Aquí puedes agregar más contenido con clases de Bootstrap -->
                         </div>
                     </div>
                 </div>
@@ -137,15 +74,6 @@
         transform: translateY(-5px);
     }
 
-    #sidebarToggle {
-        transition: all 0.3s;
-    }
-
-    #sidebarToggle:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
     @media (max-width: 768px) {
         .hero-section {
             height: 40vh;
@@ -157,20 +85,41 @@
     }
     </style>
 
-    <?php $__env->startPush('scripts'); ?>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const sidebar = document.getElementById('sidebar');
-        
-        if (sidebarToggle && sidebar) {
-            sidebarToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-            });
-        }
-    });
-    </script>
-    <?php $__env->stopPush(); ?>
+    <?php
+        $uni = auth()->user()->universidad->name ?? '';
+        $info = [
+            'TECSUP' => [
+                'historia' => 'TECSUP es reconocida como una de las instituciones líderes en educación tecnológica en el Perú. Desde su fundación, ha sido un referente en la formación de profesionales altamente capacitados, comprometidos con la innovación, la excelencia académica y el desarrollo sostenible del país.<br><br>
+                A lo largo de los años, TECSUP ha construido una sólida reputación gracias a su enfoque práctico, su vínculo estrecho con la industria y su compromiso con la calidad educativa. No solo ofrece programas técnicos y profesionales de alto nivel, sino que también promueve una cultura de aprendizaje continuo, investigación aplicada y emprendimiento tecnológico.<br><br>
+                Sus modernas instalaciones, equipadas con tecnología de punta, y un equipo docente con amplia experiencia, permiten que los estudiantes desarrollen competencias que responden a las exigencias del mercado laboral actual. TECSUP no solo forma técnicos e ingenieros, forma líderes capaces de transformar su entorno a través del conocimiento y la innovación.<br><br>
+                Estudiar en TECSUP es más que una decisión académica: es una apuesta por el futuro, por la excelencia, y por un Perú más competitivo e inclusivo. Aquí no solo se adquieren conocimientos, se construyen proyectos de vida.',
+                'mensaje' => 'En TECSUP, los libros son la puerta a la tecnología y la transformación. ¡Tú eres parte de la nueva generación de pioneros que cambiarán el mundo con conocimiento y pasión!'
+            ],
+            'UTP' => [
+                'historia' => 'La Universidad Tecnológica del Perú (UTP) destaca por su enfoque práctico y su compromiso con la excelencia académica. Sus egresados son reconocidos por su capacidad de liderazgo y emprendimiento.',
+                'mensaje' => 'En la UTP, cada libro es una herramienta para construir tu futuro. Aprovecha el poder de la educación y conviértete en el profesional que siempre soñaste ser.'
+            ],
+            'UPN' => [
+                'historia' => 'La Universidad Privada del Norte (UPN) es pionera en la formación integral de sus estudiantes, promoviendo valores, innovación y responsabilidad social.',
+                'mensaje' => 'En la UPN, los libros te conectan con ideas que transforman vidas. Sé protagonista de tu historia y deja huella en el mundo.'
+            ],
+            'UPC' => [
+                'historia' => 'La Universidad Peruana de Ciencias Aplicadas (UPC) es reconocida por su visión global y su apuesta por la creatividad y la investigación.',
+                'mensaje' => 'En la UPC, el conocimiento es tu mayor poder. Atrévete a soñar en grande y usa los libros como escalera hacia tus metas.'
+            ],
+        ];
+    ?>
+
+    <div class="container mt-10 mb-10">
+        <div class="bg-white rounded-lg shadow p-8 max-w-2xl mx-auto text-center">
+            <h2 class="text-2xl font-bold mb-4 text-primary-header">Tu Universidad: <?php echo e($uni); ?></h2>
+            <p class="text-lg mb-4 text-gray-700"><?php echo e($info[$uni]['historia'] ?? 'Eres parte de una universidad que apuesta por el futuro y la excelencia.'); ?></p>
+            <div class="bg-cta text-white rounded-lg p-4 mb-2 font-semibold">
+                <?php echo e($info[$uni]['mensaje'] ?? 'Recuerda: los libros y el aprendizaje son la clave para abrir todas las puertas de tu vida profesional y personal.'); ?>
+
+            </div>
+        </div>
+    </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

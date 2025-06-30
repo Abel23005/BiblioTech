@@ -117,7 +117,7 @@
                                                         @foreach($libro->prestamos->sortByDesc('created_at') as $prestamo)
                                                             <tr>
                                                                 <td>{{ $prestamo->fecha_prestamo->format('d/m/Y') }}</td>
-                                                                <td>{{ $prestamo->estudiante->nombre }}</td>
+                                                                <td>{{ $prestamo->usuario->nombre ?? 'Sin usuario' }}</td>
                                                                 <td>
                                                                     @switch($prestamo->estado)
                                                                         @case('activo')
