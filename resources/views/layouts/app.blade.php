@@ -70,6 +70,7 @@
                         @elseif($rol === 'bibliotecario')
                             <li><a href="{{ route('libros.index') }}" class="nav-link {{ request()->routeIs('libros.*') ? 'active' : '' }}">Libros</a></li>
                             <li><a href="{{ route('categorias.index') }}" class="nav-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}">Categorías</a></li>
+                            <li><a href="{{ route('prestamos.index') }}" class="nav-link {{ request()->routeIs('prestamos.*') ? 'active' : '' }}">Préstamos</a></li>
                             <li><a href="#" class="nav-link">Autores</a></li>
                         @endif
                         <li><a href="{{ route('profile.edit') }}" class="nav-link">Perfil</a></li>

@@ -82,6 +82,9 @@ Route::middleware('auth')->group(function () {
 
     // Ruta para el dashboard del bibliotecario
     Route::get('bibliotecario/dashboard', [App\Http\Controllers\BibliotecarioController::class, 'dashboard'])->name('bibliotecario.dashboard');
+
+    // Nueva ruta para seleccionar universidad
+    Route::get('/seleccionar-universidad', [App\Http\Controllers\UniversidadController::class, 'mostrarFormulario'])->name('seleccionar.universidad');
 });
 
 // Ruta para el formulario previo de registro
@@ -104,5 +107,7 @@ Route::post('register', [App\Http\Controllers\Auth\RegisteredUserController::cla
 Route::get('/home', function () {
     return view('welcome');
 })->name('home');
+
+Route::post('/guardar-universidad', [App\Http\Controllers\UniversidadController::class, 'guardarUniversidad'])->name('guardar.universidad');
 
 require __DIR__.'/auth.php';

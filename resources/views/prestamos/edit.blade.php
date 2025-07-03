@@ -34,7 +34,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.book') }}</label>
                                             <input type="text" 
                                                    class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 cursor-not-allowed" 
-                                                   value="{{ $prestamo->libro->titulo }} - {{ $prestamo->libro->autor }}" 
+                                                   value="{{ optional($prestamo->libro)->titulo ?? 'Sin libro' }}" 
                                                    readonly>
                                         </div>
                                     </div>
@@ -44,7 +44,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('app.student') }}</label>
                                             <input type="text" 
                                                    class="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 cursor-not-allowed" 
-                                                   value="{{ $prestamo->estudiante->nombre }} - {{ $prestamo->estudiante->codigo }}" 
+                                                   value="{{ optional($prestamo->estudiante)->nombre ?? 'Sin usuario' }} - {{ optional($prestamo->estudiante)->codigo }}" 
                                                    readonly>
                                         </div>
                                     </div>

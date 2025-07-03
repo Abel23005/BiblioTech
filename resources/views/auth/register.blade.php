@@ -68,9 +68,7 @@
                 ¿Ya registrado?
             </a>
 
-            <x-primary-button class="ms-4">
-                Registrarse
-            </x-primary-button>
+            <button type="submit" style="background: red; color: white; border: 2px solid black; font-size: 1rem; padding: 0.5rem 1.5rem; margin-left: 1rem; border-radius: 0.375rem; font-weight: 600;">Registrarse</button>
         </div>
     </form>
 </x-guest-layout>

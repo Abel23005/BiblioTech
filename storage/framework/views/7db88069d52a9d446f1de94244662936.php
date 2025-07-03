@@ -70,6 +70,7 @@
                         <?php elseif($rol === 'bibliotecario'): ?>
                             <li><a href="<?php echo e(route('libros.index')); ?>" class="nav-link <?php echo e(request()->routeIs('libros.*') ? 'active' : ''); ?>">Libros</a></li>
                             <li><a href="<?php echo e(route('categorias.index')); ?>" class="nav-link <?php echo e(request()->routeIs('categorias.*') ? 'active' : ''); ?>">Categorías</a></li>
+                            <li><a href="<?php echo e(route('prestamos.index')); ?>" class="nav-link <?php echo e(request()->routeIs('prestamos.*') ? 'active' : ''); ?>">Préstamos</a></li>
                             <li><a href="#" class="nav-link">Autores</a></li>
                         <?php endif; ?>
                         <li><a href="<?php echo e(route('profile.edit')); ?>" class="nav-link">Perfil</a></li>

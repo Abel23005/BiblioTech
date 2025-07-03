@@ -26,6 +26,14 @@
                     <a href="{{ route('alumno.buscarLibros') }}" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-900 focus:outline-none transition duration-150 ease-in-out">
                         Buscar Libros
                     </a>
+                    <li>
+                        <a href="{{ route('prestamos.create') }}" class="block px-4 py-2 text-blue-600 hover:bg-blue-100 rounded transition">Prestar libro</a>
+                    </li>
+                    @if(auth()->user()->rol == 'admin' || auth()->user()->rol == 'bibliotecario')
+                    <a href="{{ route('prestamos.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-900 focus:outline-none transition duration-150 ease-in-out">
+                        Préstamos
+                    </a>
+                    @endif
                 </div>
             </div>
 

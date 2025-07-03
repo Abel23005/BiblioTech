@@ -25,6 +25,18 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Crear o actualizar el usuario bibliotecario solicitado
+        User::firstOrCreate(
+            ['email' => 'danielkeadj@gmail.com'],
+            [
+                'nombre' => 'Daniel kea',
+                'password' => Hash::make('BiblioTech2024!'), // Contraseña segura
+                'rol' => 'bibliotecario',
+                'codigo' => 'BIB-001',
+                'universidad_id' => null, // Puedes asignar una universidad si lo deseas
+            ]
+        );
+
         $this->call([
             LibrosSeeder::class,
             EstudiantesSeeder::class,

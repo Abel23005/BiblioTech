@@ -14,7 +14,7 @@ class UsuarioController extends Controller
         $user = auth()->user();
         if ($user->rol === 'administrador' && $user->universidad_id === null) {
             // Administrador general ve todos
-            $usuarios = User::latest()->paginate(10);
+        $usuarios = User::latest()->paginate(10);
         } elseif ($user->rol === 'bibliotecario') {
             // Bibliotecario solo ve alumnos de su universidad
             $usuarios = User::where('universidad_id', $user->universidad_id)

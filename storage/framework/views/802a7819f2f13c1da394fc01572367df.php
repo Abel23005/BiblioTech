@@ -17,6 +17,14 @@
 
     <div class="py-12 bg-content">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Logo Section -->
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg mb-6">
+                <div class="p-6 text-center">
+                    <img src="<?php echo e(asset('images/Logo de Biblotech.png')); ?>" alt="BiblioTech Logo" class="mx-auto" style="max-height: 100px; margin-bottom: 15px;">
+                    <h3 class="text-primary-header font-bold text-xl">Panel de Bibliotecario</h3>
+                </div>
+            </div>
+            
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <?php if(session('status')): ?>
